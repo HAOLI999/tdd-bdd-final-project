@@ -141,6 +141,16 @@ class TestProductModel(unittest.TestCase):
         """It should delete a product and not exsit in the db"""
         product = ProductFactory()
         product.create()
-        self.assertEqual(len(product.all()),1)
+        self.assertEqual(len(Product.all()),1)
         product.delete()
-        self.assertEqual(len(product.all()),0)
+        self.assertEqual(len(Product.all()),0)
+
+    def test_list_all_product(self):
+        """It should list all prodcut"""
+        product_list = Product.all()
+        self.assertEqual(len(product_list),0)
+        for _ in range(5):
+            product = ProductFactory()
+            product.create()
+        product_list = Product.all()
+        self.assertEqual(len(product_list), 5)
