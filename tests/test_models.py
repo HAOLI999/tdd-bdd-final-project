@@ -117,3 +117,21 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(result.available,product.available)
         self.assertEqual(result.category,product.category)
 
+    def test_update_a_product(self):
+        """It should update a product"""
+        product = ProductFactory()
+        product.create()
+        self.assertIsNotNone(product.id)
+        product.name = "Hao"
+        original_id = product.id
+        original_price = product.price
+        original_description = product.description
+        original_available = product.available
+        original_category = product.category
+        product.update()
+        self.assertEqual(original_id, product.id)
+        self.assertEqual(product.name, "Hao")
+        self.assertEqual(original_price,product.price)
+        self.assertEqual(original_description,product.description)
+        self.assertEqual(original_available,product.available)
+        self.assertEqual(original_category,product.category)
