@@ -173,6 +173,22 @@ class TestProductRoutes(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.get_json()["name"],product.name)
 
+    def test_not_get_product(self):
+        """It should not get a product"""
+        response = self.client.get(f"{BASE_URL}/0")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertIn("no found", response.get_json()["message"])
+
+    def test_update_a_product(self):
+        """It should update the product"""
+        product = ProductFactory()
+        response = self.client.post(BASE_URL, json=product.serialize())
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response.get_json()["name"] = "hao"
+        new_response = self.client.put(f"{BASE_URL}/{response.get_json()['id']}", json=response.get_json())
+        self.assertEqual(new_response.status_code, status.HTTP_200_OK)
+        
+    def     
     ######################################################################
     # Utility functions
     ######################################################################
